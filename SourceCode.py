@@ -1,8 +1,16 @@
+
+import numpy as np
+import scipy as sp
 import pandas as pd
+import tkinter as tk
 import csv
 
 from sklearn.preprocessing import Imputer
 from sklearn.preprocessing import LabelEncoder
+from sklearn.tree import DecisionTreeClassifier as DTC
+from sklearn.model_selection import train_test_split as TTS
+import matplotlib.pyplot as plt
+
 
 #read the csv into a dataframe
 df = pd.read_csv('googleplaystore.csv')
@@ -34,6 +42,21 @@ for data in df3['Installs']:
 	else:
 		df3.loc[row,'Popularity'] = 'High'
 	row = row+1
-	
+
 #Store to new csv file after preprocess data
 df3.to_csv('googleplaystore_Update2.csv', index=False)
+#print(df3['Category'].unique())
+Cat_list = df3['Category'].unique()
+Cat_list.split()
+print(Cat_list)
+#print(df3['Content Rating'].describe())
+#print(df3['Content Rating'].unique())
+#print(df3['Type'].describe())
+#print(df3['Type'].unique())
+#print(df3['Android Ver'].describe())
+#print(df3['Android Ver'].unique())
+#X_train, X_test, y_train, y_test = TTS()
+print(list(range(33)))
+
+#df3['Category'] = df['Category'].map({Cat_list : list(range(33))})
+#df3.to_csv('googleplaystore_Update3.csv', index=False)
