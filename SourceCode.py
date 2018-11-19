@@ -136,3 +136,89 @@ dt= c.fit(x_train,y_train)
 #predict test set and train set
 y_predictions = dt.predict(x_test)
 y_train_predictions = dt.predict(x_train)
+
+# Accuracy check for test and train set
+print('Class Decision Tree:')
+print('accuracy of test set = ', accuracy_score(y_test, y_predictions))
+print('accuracy of train set = ', accuracy_score(y_train, y_train_predictions))
+#export tree to image
+dot_data = StringIO()
+tree.export_graphviz(c,
+                     out_file = dot_data,
+                     feature_names = features,
+                     class_names= 'Popularity', 
+                     filled = True,
+                     rounded = True,
+                     impurity = False
+                    )
+graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
+graph.write_jpg('ggplay.jpg')  #save graph as image
+print('File saved as a JPG.')
+##################################################################Random forest
+train, test = TTS(df4, test_size = 0.2)	
+x_train = train[features]
+y_train = train['Popularity']
+x_test = test[features]
+y_test = test['Popularity']
+
+forest = RandomForestClassifier(n_estimators=100, random_state=0)
+forest.fit(x_train, y_train)
+
+print('Random Forest:')
+print("Accuracy on training set: {:.3f}".format(forest.score(x_train, y_train)))
+print("Accuracy on test set: {:.3f}".format(forest.score(x_test, y_test)))
+
+###############################################################################KNN
+train, test = TTS(df4, test_size = 0.2)	
+x_train = train[features]
+y_train = train['Popularity']
+x_test = test[features]
+y_test = test['Popularity']
+# KNN model
+classifier = KNeighborsClassifier(n_neighbors=5)  
+KNN = classifier.fit(x_train, y_train)  
+# prediction for both train and test set
+y_predictions = KNN.predict(x_test)
+y_train_predictions = KNN.predict(x_train)
+
+print('KNN classifier: ')
+print('KNN accuracy of test set = ', accuracy_score(y_test, y_predictions))
+print('KNN accuracy of train set = ', accuracy_score(y_train, y_train_predictions))
+##########################################################################SVC
+train, test = TTS(df4, test_size = 0.2)	
+x_train = train[features]
+y_train = train['Popularity']
+x_test = test[features]
+y_test = test['Popularity']
+#SVC model
+SVCmodel = SVC()
+SVCmodel.fit(x_train, y_train)
+print('SVC algorithm:')
+print("Accuracy on training set: {:f}".format(SVCmodel.score(x_train, y_train)))
+print("Accuracy on test set: {:.3f}".format(SVCmodel.score(x_test, y_test)))
+
+##########################################################################GradientBoostingClassifier
+train, test = TTS(df4, test_size = 0.2)	
+x_train = train[features]
+y_train = train['Popularity']
+x_test = test[features]
+y_test = test['Popularity']
+#SVC model
+GBCmodel = GradientBoostingClassifier()
+GBCmodel.fit(x_train, y_train)
+print('GradientBoostingClassifier algorithm:')
+print("Accuracy on training set: {:f}".format(GBCmodel.score(x_train, y_train)))
+print("Accuracy on test set: {:.3f}".format(GBCmodel.score(x_test, y_test)))
+
+##########################################################################GradientBoostingClassifier
+train, test = TTS(df4, test_size = 0.2)	
+x_train = train[features]
+y_train = train['Popularity']
+x_test = test[features]
+y_test = test['Popularity']
+#GNB model
+GNBmodel = GaussianNB()
+GNBmodel.fit(x_train, y_train)
+print('GNB algorithm:')
+print("Accuracy on training set: {:f}".format(GNBmodel.score(x_train, y_train)))
+print("Accuracy on test set: {:.3f}".format(GNBmodel.score(x_test, y_test)))
